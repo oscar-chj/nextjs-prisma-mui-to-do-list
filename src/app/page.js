@@ -115,7 +115,7 @@ function editTask(tasks, id, newTitle) {
 function toggleCompleteTask(tasks, id) {
   return tasks.map(task => 
     task.id === id ? { ...task, completed: !task.completed } : task
-  )
+  );
 }
 
 // Main component
