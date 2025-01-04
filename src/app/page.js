@@ -165,18 +165,15 @@ export default function Home() {
         {tasks.map(task => (
           <li key={task.id}>
             {/* Completed effect on text (strike-through) */}
-            <span
+            <span 
               style={{
                 textDecoration: task.completed ? "line-through" : "none",
+                cursor: "pointer"
               }}
+              onClick={() => handleToggleCompleteTask(task.id)}
             >
               {task.title}
             </span>
-            
-            {/* Toggle Completion Button */}
-            <button onClick={() => handleToggleCompleteTask(task.id)}>
-              {task.completed ? "Undo" : "Complete"}
-            </button>
 
             {/* Remove Task Button */}
             <button onClick={() => handleRemoveTask(task.id)}>
