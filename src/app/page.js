@@ -168,7 +168,8 @@ export default function Home() {
             <span 
               style={{
                 textDecoration: task.completed ? "line-through" : "none",
-                cursor: "pointer"
+                cursor: "pointer",
+                userSelect: "none"
               }}
               onClick={() => handleToggleCompleteTask(task.id)}
             >
