@@ -188,8 +188,7 @@ export default function Home() {
               if (newTitle) {
                 handleEditTask(task.id, newTitle);
               }
-              }}
-            >
+            }}>
               ✏️
             </button>
           </li>
