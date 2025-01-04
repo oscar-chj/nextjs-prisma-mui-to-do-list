@@ -183,12 +183,8 @@ export default function Home() {
       return;
     }
 
-    const updatedTask = await res.json();
-    setTasks(prevTasks => 
-      prevTasks.map(task => 
-        task.id === updatedTask.id ? updatedTask : task
-      )
-    );
+    const { id: updatedId, title: updatedTitle } = await res.json();
+    setTasks(prevTasks => editTask(prevTasks, updatedId, updatedTitle));
   };
 
   const handleToggleCompleteTask = async (id) => {
