@@ -119,7 +119,29 @@ function toggleCompleteTask(tasks, id) {
 }
 
 // Main component
-export default async function Home() {
+export default function Home() {
+  // Create an array 'tasks'
+  // Set 'setTasks' to modify array 'tasks'
+  const [tasks, setTasks] = useState([]);
+
+  // Create handler functions (since this is a database-oriented app)
+  const handleAddTask = (title) => {
+    setTasks(prevTasks => addTask(prevTasks, title));
+  };
+
+  const handleRemoveTask = (id) => {
+    setTasks(prevTasks => removeTask(prevTasks, id));
+  };
+
+  const handleEditTask = (id, newTitle) => {
+    setTasks(prevTasks => editTaskTask(prevTasks, id, newTitle));
+  };
+
+  const handleToggleCompleteTask = (id) => {
+    setTasks(prevTasks => toggleCompleteTaskTask(prevTasks, id));
+  };
+
+  // UI
   return (
     <div className={styles.page}>
       <head>
@@ -127,6 +149,51 @@ export default async function Home() {
       </head>
       <body>
         <header>A simple to-do list</header>
+
+        <input
+          type="text"
+          placeholder="Add a new task"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleAddTask(e.target.value);
+              e.target.value = ""; // Clear input field
+            }
+          }}
+        />
+
+        <ul>
+          {tasks.map(task => (
+            <li key={task.id}>
+              {/* Completed effect on text (strike-through) */}
+              <span
+                style={{
+                  textDecoration: task.completed ? "line-through" : "none",
+                }}
+              >
+                {task.title}
+              </span>
+              
+              {/* Toggle Completion Button */}
+              <button onClick={() => handleToggleCompleteTask(task.id)}>
+                {task.completed ? "Undo" : "Complete"}
+              </button>
+
+              {/* Remove Task Button */}
+              <button onClick={() => handleRemoveTask(task.id)}>
+                ❌
+              </button>
+
+              {/* Edit Task Button */}
+              <button onClick={() => {
+                const newTitle = prompt("Edit task title:", task.title);
+                handleEditTask(task.id, newTitle);
+                }}
+              >
+                ✏️
+              </button>
+            </li>
+          ))}
+        </ul>
       </body>
     </div>
   );
