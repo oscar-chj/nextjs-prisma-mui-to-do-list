@@ -30,8 +30,11 @@ export default async function handler(req, res) {
         // Update a task
         const { id, title, completed } = req.body;
         const updatedTask = await prisma.task.update({
-            where: { id },
-            data: { title, completed },
+            where: { id: parseInt(id) },
+            data: {
+                ...(title && { title }),
+                ...(typeof completed === "boolean" && { completed }),
+            },
         });
 
         // HTTP 200: OK (successful request)
@@ -41,7 +44,7 @@ export default async function handler(req, res) {
         // Delete a task
         const { id } = req.body;
         await prisma.task.delete({
-            where: { id },
+            where: { id: parseInt(id) },
         });
 
         // HTTP 204: Successfully processed request, but not returning any content in response

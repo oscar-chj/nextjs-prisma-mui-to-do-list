@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import styles from "./page.module.css";
 
@@ -45,7 +45,7 @@ function addTask(tasks, title) {
  * Remove an existing task from the task list.
  * 
  * @param {Array<Object>} tasks - The current list of tasks.
- * @param {int} id - The id of the task to be removed.
+ * @param {number} id - The id of the task to be removed.
  * @returns {Array<Object>} The updated list of tasks.
  * 
  * @example
@@ -69,7 +69,7 @@ function removeTask(tasks, id) {
  * Edits an existing task from the task list.
  * 
  * @param {Array<Object>} tasks - The current list of tasks.
- * @param {int} id - The id of the task to be edited.
+ * @param {number} id - The id of the task to be edited.
  * @param {string} newTitle - The new title of said task.
  * @returns {Array<Object>} The updated list of tasks.
  * 
@@ -125,21 +125,89 @@ export default function Home() {
   // Set 'setTasks' to modify array 'tasks'
   const [tasks, setTasks] = useState([]);
 
+  // Fetch tasks from database on page build
+  // TODO: Research more on this topic
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const res = await fetch("/api/tasks");
+      const data = await res.json();
+      setTasks(data);
+    };
+
+    fetchTasks();
+  }, []);
+
   // Create handler functions (since this is a database-oriented app)
-  const handleAddTask = (title) => {
-    setTasks(prevTasks => addTask(prevTasks, title));
+  // TODO: Research more on integrating Frontend functions with Backend databases
+  const handleAddTask = async (title) => {
+    if (!title.trim()) return;
+
+    const res = await fetch("/api/tasks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title }),
+    });
+
+    if (!res.ok) {
+      console.error("Error adding task:", await res.text());
+      return;
+    }
+
+    const newTask = await res.json();
+    setTasks(prevTasks => [...prevTasks, newTask]);
   };
 
-  const handleRemoveTask = (id) => {
+  const handleRemoveTask = async (id) => {
+    await fetch(`/api/tasks/${id}`, {
+      method: "DELETE",
+    });
+
     setTasks(prevTasks => removeTask(prevTasks, id));
   };
 
-  const handleEditTask = (id, newTitle) => {
-    setTasks(prevTasks => editTask(prevTasks, id, newTitle));
+  const handleEditTask = async (id, newTitle) => {
+    if (!newTitle.trim()) return;
+
+    const res = await fetch("/api/tasks/", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id, title: newTitle }),
+    });
+    
+    if (!res.ok) {
+      console.error("Error updating task:", await res.text());
+      return;
+    }
+
+    const updatedTask = await res.json();
+    setTasks(prevTasks => 
+      prevTasks.map(task =>
+        task.id === updatedTask.id ? updatedTask : task
+      )
+    );
   };
 
-  const handleToggleCompleteTask = (id) => {
-    setTasks(prevTasks => toggleCompleteTask(prevTasks, id));
+  const handleToggleCompleteTask = async (id) => {
+    const task = tasks.find(task => task.id === id);
+    if (!task) return;
+
+    await fetch(`/api/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ completed: !task.completed }),
+    });
+
+    setTasks(prevTasks => 
+      prevTasks.map(task =>
+        task.id===id ? { ...task, completed: !task.completed } : task
+      )
+    );
   };
 
   // UI
