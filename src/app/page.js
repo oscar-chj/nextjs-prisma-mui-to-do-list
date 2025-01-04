@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Head from "next/head";
 import styles from "./page.module.css";
 
 // Next.js for Frontend and Backend Framework
