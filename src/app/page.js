@@ -148,7 +148,7 @@ export default function Home() {
         <title>To-Do List</title>
       </head>
       <body>
-        <header>A simple to-do list</header>
+        <h1>A simple to-do list</h1>
 
         <input
           type="text"
