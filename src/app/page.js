@@ -185,7 +185,9 @@ export default function Home() {
             {/* Edit Task Button */}
             <button onClick={() => {
               const newTitle = prompt("Edit task title:", task.title);
-              handleEditTask(task.id, newTitle);
+              if (newTitle) {
+                handleEditTask(task.id, newTitle);
+              }
               }}
             >
               ✏️
