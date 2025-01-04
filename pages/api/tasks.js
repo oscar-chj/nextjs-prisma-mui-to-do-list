@@ -42,7 +42,7 @@ export default async function handler(req, res) {
         res.status(200).json(updatedTask);
     } else if (req.method === "DELETE") {
         // Delete a task
-        const { id } = req.body;
+        const { id } = req.query;
         await prisma.task.delete({
             where: { id: parseInt(id) },
         });
