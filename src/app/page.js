@@ -134,11 +134,11 @@ export default function Home() {
   };
 
   const handleEditTask = (id, newTitle) => {
-    setTasks(prevTasks => editTaskTask(prevTasks, id, newTitle));
+    setTasks(prevTasks => editTask(prevTasks, id, newTitle));
   };
 
   const handleToggleCompleteTask = (id) => {
-    setTasks(prevTasks => toggleCompleteTaskTask(prevTasks, id));
+    setTasks(prevTasks => toggleCompleteTask(prevTasks, id));
   };
 
   // UI
