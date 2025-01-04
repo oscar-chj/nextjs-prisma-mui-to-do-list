@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import styles from "./page.module.css";
@@ -144,57 +144,55 @@ export default function Home() {
   // UI
   return (
     <div className={styles.page}>
-      <head>
+      <Head>
         <title>To-Do List</title>
-      </head>
-      <body>
-        <h1>A simple to-do list</h1>
+      </Head>
+      <h1>A simple to-do list</h1>
 
-        <input
-          type="text"
-          placeholder="Add a new task"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              handleAddTask(e.target.value);
-              e.target.value = ""; // Clear input field
-            }
-          }}
-        />
+      <input
+        type="text"
+        placeholder="Add a new task"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleAddTask(e.target.value);
+            e.target.value = ""; // Clear input field
+          }
+        }}
+      />
 
-        <ul>
-          {tasks.map(task => (
-            <li key={task.id}>
-              {/* Completed effect on text (strike-through) */}
-              <span
-                style={{
-                  textDecoration: task.completed ? "line-through" : "none",
-                }}
-              >
-                {task.title}
-              </span>
-              
-              {/* Toggle Completion Button */}
-              <button onClick={() => handleToggleCompleteTask(task.id)}>
-                {task.completed ? "Undo" : "Complete"}
-              </button>
+      <ul>
+        {tasks.map(task => (
+          <li key={task.id}>
+            {/* Completed effect on text (strike-through) */}
+            <span
+              style={{
+                textDecoration: task.completed ? "line-through" : "none",
+              }}
+            >
+              {task.title}
+            </span>
+            
+            {/* Toggle Completion Button */}
+            <button onClick={() => handleToggleCompleteTask(task.id)}>
+              {task.completed ? "Undo" : "Complete"}
+            </button>
 
-              {/* Remove Task Button */}
-              <button onClick={() => handleRemoveTask(task.id)}>
-                ❌
-              </button>
+            {/* Remove Task Button */}
+            <button onClick={() => handleRemoveTask(task.id)}>
+              ❌
+            </button>
 
-              {/* Edit Task Button */}
-              <button onClick={() => {
-                const newTitle = prompt("Edit task title:", task.title);
-                handleEditTask(task.id, newTitle);
-                }}
-              >
-                ✏️
-              </button>
-            </li>
-          ))}
-        </ul>
-      </body>
+            {/* Edit Task Button */}
+            <button onClick={() => {
+              const newTitle = prompt("Edit task title:", task.title);
+              handleEditTask(task.id, newTitle);
+              }}
+            >
+              ✏️
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
