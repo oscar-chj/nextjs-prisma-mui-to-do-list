@@ -156,7 +156,7 @@ export default function Home() {
     }
 
     const newTask = await res.json();
-    setTasks(prevTasks => [...prevTasks, newTask]);
+    setTasks((prevTasks) => addTask(prevTasks, newTask.title));
   };
 
   const handleRemoveTask = async (id) => {
@@ -164,7 +164,7 @@ export default function Home() {
       method: "DELETE",
     });
 
-    setTasks(prevTasks => removeTask(prevTasks, id));
+    setTasks((prevTasks) => removeTask(prevTasks, id));
   };
 
   const handleEditTask = async (id, newTitle) => {
@@ -185,7 +185,7 @@ export default function Home() {
 
     const updatedTask = await res.json();
     setTasks(prevTasks => 
-      prevTasks.map(task =>
+      prevTasks.map(task => 
         task.id === updatedTask.id ? updatedTask : task
       )
     );
@@ -203,11 +203,7 @@ export default function Home() {
       body: JSON.stringify({ completed: !task.completed }),
     });
 
-    setTasks(prevTasks => 
-      prevTasks.map(task =>
-        task.id===id ? { ...task, completed: !task.completed } : task
-      )
-    );
+    setTasks((prevTasks) => toggleCompleteTask(prevTasks, id));
   };
 
   // UI
