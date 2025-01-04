@@ -15,8 +15,8 @@ datasource db {
 
 // A database to store values of tasks
 model Task {
-  id Int @id @default(autoincrement())
-  title String
-  completed Boolean @default(false)
-  createdAt DateTime @default(now())
+  id        Int       @id @default(autoincrement())
+  title     String
+  completed Boolean   @default(false)
+  createdAt DateTime  @default(now())
 }
