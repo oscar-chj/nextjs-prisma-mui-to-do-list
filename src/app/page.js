@@ -29,7 +29,7 @@ import styles from "./page.module.css";
  *   { id: 2, title: 'Learn Next.js', completed: false }
  * ]
  */
-function addTask(title, tasks) {
+function addTask(tasks, title) {
   // Prevent empty tasks
   if (title === "") return;
 
