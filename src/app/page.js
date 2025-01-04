@@ -153,7 +153,7 @@ export default function Home() {
         type="text"
         placeholder="Add a new task"
         onKeyDown={(e) => {
-          if (e.key === "Enter") {
+          if (e.key === "Enter" && e.target.value.trim() !== "") {
             handleAddTask(e.target.value);
             e.target.value = ""; // Clear input field
           }
