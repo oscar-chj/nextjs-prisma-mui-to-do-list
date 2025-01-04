@@ -26,5 +26,33 @@ export default async function handler(req, res) {
         // HTTP 201: A new resource was successfully created in the database
         // JSON Output: Newly created task
         res.status(201).json(newTask);
+    } else if (req.method === "PUT") {
+        // Update a task
+        const { id, title, completed } = req.body;
+        const updatedTask = await prisma.task.update({
+            where: { id },
+            data: { title, completed },
+        });
+
+        // HTTP 200: OK (successful request)
+        // JSON Output: Updated tasks
+        res.status(200).json(updatedTask);
+    } else if (req.method === "DELETE") {
+        // Delete a task
+        const { id } = req.body;
+        await prisma.task.delete({
+            where: { id },
+        });
+
+        // HTTP 204: Successfully processed request, but not returning any content in response
+        // End process after completion, no response required after deletion of task
+        res.status(204).end();
+    } else {
+        // Invalid method error catch
+        res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
+        
+        // HTTP 405: Unallowed HTTP method
+        // End process with an error message
+        res.status(405).end('Method ${req.method} Not Allowed');
     }
 }
