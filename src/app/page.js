@@ -30,15 +30,7 @@ import styles from "./page.module.css";
  * ]
  */
 function addTask(tasks, title) {
-  // Prevent empty tasks
-  if (title === "") return;
-
-  const newTask = {
-    id: Date.now(), // semi-unique ID for small apps
-    title: title,
-    completed: false
-  };
-  return [...tasks, newTask];
+  return [...tasks, title];
 }
 
 /**
@@ -156,7 +148,7 @@ export default function Home() {
     }
 
     const newTask = await res.json();
-    setTasks(prevTasks => addTask(prevTasks, newTask.title));
+    setTasks(prevTasks => addTask(prevTasks, newTask));
   };
 
   const handleRemoveTask = async (id) => {
