@@ -121,7 +121,7 @@ export default function Home() {
   // TODO: Research more on this topic
   useEffect(() => {
     const fetchTasks = async () => {
-      const res = await fetch("/api/tasks");
+      const res = await fetch("/api/tasks/[id]");
       const data = await res.json();
       setTasks(data);
     };
@@ -152,17 +152,23 @@ export default function Home() {
   };
 
   const handleRemoveTask = async (id) => {
+    if (!id) return;
+    
+
     await fetch(`/api/tasks/${id}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-
+    
     setTasks(prevTasks => removeTask(prevTasks, id));
   };
 
   const handleEditTask = async (id, newTitle) => {
     if (!newTitle.trim()) return;
 
-    const res = await fetch("/api/tasks/", {
+    const res = await fetch(`/api/tasks/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
