@@ -232,13 +232,20 @@ export default function Home() {
             <span 
               style={{
                 textDecoration: task.completed ? "line-through" : "none",
-                cursor: "pointer",
                 userSelect: "none"
               }}
-              onClick={() => handleToggleCompleteTask(task.id)}
             >
               {task.title}
             </span>
+
+            {/* Complete Task Button */}
+            <IconButton 
+              edge="end"
+              onClick={() => handleToggleCompleteTask(task.id)}
+              aria-label="complete"
+            >
+              <CheckIcon />
+            </IconButton>
 
             {/* Remove Task Button */}
             <IconButton 
