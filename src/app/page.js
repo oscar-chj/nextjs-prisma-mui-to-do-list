@@ -183,12 +183,12 @@ export default function Home() {
     const task = tasks.find(task => task.id === id);
     if (!task) return;
 
-    await fetch(`/api/tasks/${id}`, {
+    await fetch("/api/tasks/", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ completed: !task.completed }),
+      body: JSON.stringify({ id, completed: !task.completed }),
     });
 
     setTasks(prevTasks => toggleCompleteTask(prevTasks, id));
