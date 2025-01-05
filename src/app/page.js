@@ -125,7 +125,7 @@ export default function Home() {
   // TODO: Research more on this topic
   useEffect(() => {
     const fetchTasks = async () => {
-      const res = await fetch("/api/tasks/[id]");
+      const res = await fetch("/api/tasks");
       const data = await res.json();
       setTasks(data);
     };
@@ -146,11 +146,6 @@ export default function Home() {
       body: JSON.stringify({ title }),
     });
 
-    if (!res.ok) {
-      console.error("Error adding task:", await res.text());
-      return;
-    }
-
     const newTask = await res.json();
     setTasks(prevTasks => addTask(prevTasks, newTask));
   };
@@ -158,7 +153,6 @@ export default function Home() {
   const handleRemoveTask = async (id) => {
     if (!id) return;
     
-
     await fetch(`/api/tasks/${id}`, {
       method: "DELETE",
       headers: {
@@ -179,11 +173,6 @@ export default function Home() {
       },
       body: JSON.stringify({ id, title: newTitle }),
     });
-    
-    if (!res.ok) {
-      console.error("Error updating task:", await res.text());
-      return;
-    }
 
     const { id: updatedId, title: updatedTitle } = await res.json();
     setTasks(prevTasks => editTask(prevTasks, updatedId, updatedTitle));
