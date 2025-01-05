@@ -134,7 +134,7 @@ export default function Home() {
   const handleAddTask = async (title) => {
     if (!title.trim()) return;
 
-    const res = await fetch("/api/tasks", {
+    const res = await fetch("/api/tasks/[id]", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -189,7 +189,7 @@ export default function Home() {
     const task = tasks.find(task => task.id === id);
     if (!task) return;
 
-    await fetch("/api/tasks/", {
+    await fetch("/api/tasks/[id]", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

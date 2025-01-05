@@ -18,6 +18,9 @@ export default async function handler(req, res) {
         // Equivalent to
         // const title = req.body.title;
 
+        // DEBUG
+        // console.log("DEBUG: \"POST\" HTTP 'req' BODY: ",  req.body);
+
         // Create a new task (row) in the client's task array
         const newTask = await prisma.task.create({
             data: { title }, // Since only the title is user input
@@ -29,7 +32,10 @@ export default async function handler(req, res) {
     } else if (req.method === "PUT") {
         // Update a task
         const { id, title, completed } = req.body;
-        console.log("DEBUG: \"PUT\" HTTP 'req' BODY: ",  req.body);
+
+        // DEBUG
+        // console.log("DEBUG: \"PUT\" HTTP 'req' BODY: ",  req.body);
+
         const updatedTask = await prisma.task.update({
             where: { id: parseInt(id) },
             data: {
@@ -44,9 +50,14 @@ export default async function handler(req, res) {
     } else if (req.method === "DELETE") {
         // Delete a task
         const { id } = req.query;
+
+        // DEBUG
+        // console.log("DEBUG: \"DELETE\" HTTP 'req' QUERY: ",  req.query);
+
         await prisma.task.delete({
             where: { id: isNaN(id) ? id : parseInt(id) },
         });
+
         // HTTP 204: Successfully processed request, but not returning any content in response
         // End process after completion, no response required after deletion of task
         res.status(204).end();
