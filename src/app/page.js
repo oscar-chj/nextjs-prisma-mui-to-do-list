@@ -3,6 +3,10 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import styles from "./page.module.css";
+import { TextField, Button, List, ListItem, ListItemText, IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import CheckIcon from "@mui/icons-material/Check";
 
 // Next.js for Frontend and Backend Framework
 // Prisma for Database Object-Relational Mapping
@@ -206,11 +210,13 @@ export default function Home() {
       <Head>
         <title>To-Do List</title>
       </Head>
-      <h1>A simple to-do list</h1>
 
-      <input
-        type="text"
-        placeholder="Add a new task"
+      <h1>A simple To-Do list</h1>
+
+      <TextField
+        label="Add a new task"
+        variant="outlined"
+        fullWidth
         onKeyDown={(e) => {
           if (e.key === "Enter" && e.target.value.trim() !== "") {
             handleAddTask(e.target.value);
@@ -219,9 +225,9 @@ export default function Home() {
         }}
       />
 
-      <ul>
+      <List>
         {tasks.map(task => (
-          <li key={task.id}>
+          <ListItem key={task.id}>
             {/* Completed effect on text (strike-through) */}
             <span 
               style={{
@@ -235,22 +241,30 @@ export default function Home() {
             </span>
 
             {/* Remove Task Button */}
-            <button onClick={() => handleRemoveTask(task.id)}>
-              ❌
-            </button>
+            <IconButton 
+              edge="end"
+              onClick={() => handleRemoveTask(task.id)}
+              aria-label="delete"
+            >
+              <DeleteIcon />
+            </IconButton>
 
             {/* Edit Task Button */}
-            <button onClick={() => {
-              const newTitle = prompt("Edit task title:", task.title);
-              if (newTitle) {
-                handleEditTask(task.id, newTitle);
-              }
-            }}>
-              ✏️
-            </button>
-          </li>
+            <IconButton 
+              edge="end"
+              onClick={() => {
+                const newTitle = prompt("Edit task title:", task.title);
+                if (newTitle) {
+                  handleEditTask(task.id, newTitle);
+                }
+              }}
+              aria-label="edit"
+            >
+              <EditIcon />
+            </IconButton>
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </div>
   );
 }
