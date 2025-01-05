@@ -18,12 +18,25 @@ export default async function handler(req, res) {
         // Equivalent to
         // const title = req.body.title;
 
+        // Find current highest ID in table
+        const maxTask = await prisma.task.findFirst({
+            orderBy: {
+                id: "desc",
+            },
+        });
+
+        // Set new ID
+        const newId = maxTask ? maxTask.id + 1 : 1;
+
         // DEBUG
         // console.log("DEBUG: \"POST\" HTTP 'req' BODY: ",  req.body);
 
         // Create a new task (row) in the client's task array
         const newTask = await prisma.task.create({
-            data: { title }, // Since only the title is user input
+            data: { 
+                id: newId,
+                title: title,
+             },
         });
 
         // HTTP 201: A new resource was successfully created in the database
