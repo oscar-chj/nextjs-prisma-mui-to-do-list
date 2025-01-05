@@ -125,7 +125,7 @@ export default function Home() {
   // TODO: Research more on this topic
   useEffect(() => {
     const fetchTasks = async () => {
-      const res = await fetch("/api/tasks");
+      const res = await fetch("/api/tasks/[id]");
       const data = await res.json();
       setTasks(data);
     };
