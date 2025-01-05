@@ -202,6 +202,7 @@ export default function Home() {
 
       <h1>A simple To-Do list</h1>
 
+      {/* Input Field */}
       <TextField
         label="Add a new task"
         variant="outlined"
@@ -214,53 +215,56 @@ export default function Home() {
         }}
       />
 
-      <List>
-        {tasks.map(task => (
-          <ListItem key={task.id}>
-            {/* Completed effect on text (strike-through) */}
-            <span 
-              style={{
-                textDecoration: task.completed ? "line-through" : "none",
-                userSelect: "none"
-              }}
-            >
-              {task.title}
-            </span>
+      {/* Task List */}
+      <div className={styles["task-container"]}>
+        <List>
+          {tasks.map(task => (
+            <ListItem key={task.id} className={styles["task-item"]}>
+              {/* Completed effect on text (strike-through) */}
+              <span 
+                style={{
+                  textDecoration: task.completed ? "line-through" : "none",
+                  userSelect: "none"
+                }}
+              >
+                {task.title}
+              </span>
 
-            {/* Complete Task Button */}
-            <IconButton 
-              edge="end"
-              onClick={() => handleToggleCompleteTask(task.id)}
-              aria-label="complete"
-            >
-              <CheckIcon />
-            </IconButton>
+              {/* Complete Task Button */}
+              <IconButton 
+                edge="end"
+                onClick={() => handleToggleCompleteTask(task.id)}
+                aria-label="complete"
+              >
+                <CheckIcon />
+              </IconButton>
 
-            {/* Remove Task Button */}
-            <IconButton 
-              edge="end"
-              onClick={() => handleRemoveTask(task.id)}
-              aria-label="delete"
-            >
-              <DeleteIcon />
-            </IconButton>
+              {/* Remove Task Button */}
+              <IconButton 
+                edge="end"
+                onClick={() => handleRemoveTask(task.id)}
+                aria-label="delete"
+              >
+                <DeleteIcon />
+              </IconButton>
 
-            {/* Edit Task Button */}
-            <IconButton 
-              edge="end"
-              onClick={() => {
-                const newTitle = prompt("Edit task title:", task.title);
-                if (newTitle) {
-                  handleEditTask(task.id, newTitle);
-                }
-              }}
-              aria-label="edit"
-            >
-              <EditIcon />
-            </IconButton>
-          </ListItem>
-        ))}
-      </List>
+              {/* Edit Task Button */}
+              <IconButton 
+                edge="end"
+                onClick={() => {
+                  const newTitle = prompt("Edit task title:", task.title);
+                  if (newTitle) {
+                    handleEditTask(task.id, newTitle);
+                  }
+                }}
+                aria-label="edit"
+              >
+                <EditIcon />
+              </IconButton>
+            </ListItem>
+          ))}
+        </List>
+      </div>
     </div>
   );
 }
