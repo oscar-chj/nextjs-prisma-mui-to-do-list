@@ -15,13 +15,14 @@ This project is a simple to-do list application built with:
 ```
 .
 ├── prisma/
-│   └── schema.prisma  # Prisma schema file
+│   └── schema.prisma  # Prisma schema │
 ├── src/
-│   ├── app/
-│   │   ├── api/
-│   │   │   └── tasks/
-│   │   │       └── [id].js  # API route handling CRUD operations
-│   │   └── page.js  # Main page with task management logic
+│   └── app/
+│       └── page.js  # Main page with task management logic
+├── pages/
+│       api/
+│       └── tasks/
+│           └── [id].js  # API route handling CRUD operations
 ├── .env  # Environment variables for database connection
 ├── README.md  # Project documentation
 └── package.json  # Project dependencies and scripts
